@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "4f167a6a-47c8-4ddb-a700-aac91a592ee4",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\candidate.json",
+  "output": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\ride-lifecycle-sequence.html",
+  "specification": {
+    "sha256": "557b87da08f63600b821133a9dbf5631ad626634ffd4f014b58a38e1492cefac",
+    "bytes": 10122
+  },
+  "artifact": {
+    "sha256": "c3b0ed853ea0c06e7de226c6c576faba4800469a267a628a7e9b09e2ababda17",
+    "bytes": 862112
+  }
+}

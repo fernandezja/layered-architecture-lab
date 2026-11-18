@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Secuencia de una solicitud de viaje",
+    "locale": "es",
+    "output": ".archify/sequence-ride-lifecycle-20261118-103500/ride-lifecycle-sequence.html",
+    "quality_profile": "showcase",
+    "column_fit": "spread",
+    "repository": {
+      "url": "https://github.com/fernandezja/layered-architecture-lab.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "0f61c64a5a85546c22e28c489024e3270df21313"
+    }
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "Cliente HTTP",
+      "sublabel": "lee drivers y opera viajes",
+      "sources": [
+        {
+          "path": "requests/mobility-dotnet.http",
+          "line": 3,
+          "end_line": 30,
+          "label": "Ejemplo de uso .NET"
+        },
+        {
+          "path": "requests/mobility-typescript.http",
+          "line": 3,
+          "end_line": 30,
+          "label": "Ejemplo de uso TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "HTTP API",
+      "sublabel": "rutas y respuestas JSON",
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Api/Program.cs",
+          "line": 68,
+          "end_line": 110,
+          "label": "Endpoints .NET"
+        },
+        {
+          "path": "typescript/src/ui/api/MobilityRoutes.ts",
+          "line": 18,
+          "end_line": 58,
+          "label": "Endpoints TypeScript"
+        },
+        {
+          "path": "typescript/src/ui/api/ApiServer.ts",
+          "line": 1,
+          "end_line": 15,
+          "label": "Inicio del servidor"
+        }
+      ]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "RideService",
+      "sublabel": "reglas y transiciones",
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Business/Services/RideService.cs",
+          "line": 19,
+          "end_line": 143,
+          "label": "Flujo de negocio .NET"
+        },
+        {
+          "path": "typescript/src/business/services/RideService.ts",
+          "line": 16,
+          "end_line": 113,
+          "label": "Flujo de negocio TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "type": "database",
+      "label": "Repositories",
+      "sublabel": "interfaces + almacenamiento in-memory",
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Data/InMemoryRideRepository.cs",
+          "line": 1,
+          "end_line": 22,
+          "label": "Repositorio .NET"
+        },
+        {
+          "path": "dotnet/src/Mobility.Data/InMemoryDriverRepository.cs",
+          "line": 1,
+          "end_line": 24,
+          "label": "Repositorio de drivers .NET"
+        },
+        {
+          "path": "typescript/src/data/InMemoryRideRepository.ts",
+          "line": 1,
+          "end_line": 19,
+          "label": "Repositorio TypeScript"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 145,
+      "to": 325,
+      "label": "1 · Consultar drivers"
+    },
+    {
+      "from": 320,
+      "to": 530,
+      "label": "2 · Solicitar viaje"
+    },
+    {
+      "from": 555,
+      "to": 820,
+      "label": "3 · Aceptar viaje"
+    },
+    {
+      "from": 845,
+      "to": 1110,
+      "label": "4 · Iniciar viaje"
+    },
+    {
+      "from": 1135,
+      "to": 1400,
+      "label": "5 · Completar viaje"
+    }
+  ],
+  "messages": [
+    {
+      "id": "list-drivers",
+      "from": "client",
+      "to": "api",
+      "y": 160,
+      "label": "GET /api/drivers",
+      "variant": "emphasis"
+    },
+    {
+      "id": "get-drivers",
+      "from": "api",
+      "to": "service",
+      "y": 190,
+      "label": "GetDrivers()"
+    },
+    {
+      "id": "read-drivers",
+      "from": "service",
+      "to": "data",
+      "y": 220,
+      "label": "GetAll drivers"
+    },
+    {
+      "id": "drivers-result",
+      "from": "data",
+      "to": "service",
+      "y": 250,
+      "label": "Driver list",
+      "variant": "return"
+    },
+    {
+      "id": "drivers-to-api",
+      "from": "service",
+      "to": "api",
+      "y": 280,
+      "label": "Drivers",
+      "variant": "return"
+    },
+    {
+      "id": "drivers-to-client",
+      "from": "api",
+      "to": "client",
+      "y": 310,
+      "label": "200 JSON",
+      "variant": "return"
+    },
+    {
+      "id": "create-request",
+      "from": "client",
+      "to": "api",
+      "y": 340,
+      "label": "POST /api/rides",
+      "variant": "emphasis"
+    },
+    {
+      "id": "create-call",
+      "from": "api",
+      "to": "service",
+      "y": 370,
+      "label": "CreateRide(origin, destination, type)"
+    },
+    {
+      "id": "save-requested",
+      "from": "service",
+      "to": "data",
+      "y": 400,
+      "label": "Save REQUESTED ride",
+      "note": "Valida origen, destino y tipo de vehículo antes de guardar."
+    },
+    {
+      "id": "requested-saved",
+      "from": "data",
+      "to": "service",
+      "y": 455,
+      "label": "Ride guardado",
+      "variant": "return"
+    },
+    {
+      "id": "created-ride",
+      "from": "service",
+      "to": "api",
+      "y": 485,
+      "label": "Ride",
+      "variant": "return"
+    },
+    {
+      "id": "created-response",
+      "from": "api",
+      "to": "client",
+      "y": 515,
+      "label": "201 Created",
+      "variant": "return"
+    },
+    {
+      "id": "accept-request",
+      "from": "client",
+      "to": "api",
+      "y": 575,
+      "label": "POST /api/rides/{id}/accept",
+      "variant": "emphasis"
+    },
+    {
+      "id": "accept-call",
+      "from": "api",
+      "to": "service",
+      "y": 605,
+      "label": "AcceptRide(rideId, driverId)"
+    },
+    {
+      "id": "load-for-accept",
+      "from": "service",
+      "to": "data",
+      "y": 635,
+      "label": "Get ride + driver"
+    },
+    {
+      "id": "accept-state",
+      "from": "data",
+      "to": "service",
+      "y": 665,
+      "label": "Ride + driver",
+      "variant": "return"
+    },
+    {
+      "id": "save-accepted",
+      "from": "service",
+      "to": "data",
+      "y": 695,
+      "label": "Save ACCEPTED + driver busy",
+      "note": "Solo acepta un viaje REQUESTED con un driver disponible y vehículo compatible."
+    },
+    {
+      "id": "accepted-saved",
+      "from": "data",
+      "to": "service",
+      "y": 750,
+      "label": "Cambios guardados",
+      "variant": "return"
+    },
+    {
+      "id": "accepted-ride",
+      "from": "service",
+      "to": "api",
+      "y": 780,
+      "label": "Ride ACCEPTED",
+      "variant": "return"
+    },
+    {
+      "id": "accepted-response",
+      "from": "api",
+      "to": "client",
+      "y": 810,
+      "label": "200 OK",
+      "variant": "return"
+    },
+    {
+      "id": "start-request",
+      "from": "client",
+      "to": "api",
+      "y": 865,
+      "label": "POST /api/rides/{id}/start",
+      "variant": "emphasis"
+    },
+    {
+      "id": "start-call",
+      "from": "api",
+      "to": "service",
+      "y": 895,
+      "label": "StartRide(rideId)"
+    },
+    {
+      "id": "load-for-start",
+      "from": "service",
+      "to": "data",
+      "y": 925,
+      "label": "Get ride"
+    },
+    {
+      "id": "start-state",
+      "from": "data",
+      "to": "service",
+      "y": 955,
+      "label": "Ride ACCEPTED",
+      "variant": "return"
+    },
+    {
+      "id": "save-in-progress",
+      "from": "service",
+      "to": "data",
+      "y": 985,
+      "label": "Save IN_PROGRESS",
+      "note": "El negocio solo permite iniciar un viaje ACCEPTED."
+    },
+    {
+      "id": "started-saved",
+      "from": "data",
+      "to": "service",
+      "y": 1040,
+      "label": "Ride actualizado",
+      "variant": "return"
+    },
+    {
+      "id": "started-ride",
+      "from": "service",
+      "to": "api",
+      "y": 1070,
+      "label": "Ride IN_PROGRESS",
+      "variant": "return"
+    },
+    {
+      "id": "started-response",
+      "from": "api",
+      "to": "client",
+      "y": 1100,
+      "label": "200 OK",
+      "variant": "return"
+    },
+    {
+      "id": "complete-request",
+      "from": "client",
+      "to": "api",
+      "y": 1155,
+      "label": "POST /api/rides/{id}/complete",
+      "variant": "emphasis"
+    },
+    {
+      "id": "complete-call",
+      "from": "api",
+      "to": "service",
+      "y": 1185,
+      "label": "CompleteRide(rideId)"
+    },
+    {
+      "id": "load-for-complete",
+      "from": "service",
+      "to": "data",
+      "y": 1215,
+      "label": "Get ride + assigned driver"
+    },
+    {
+      "id": "complete-state",
+      "from": "data",
+      "to": "service",
+      "y": 1245,
+      "label": "Ride IN_PROGRESS + driver",
+      "variant": "return"
+    },
+    {
+      "id": "save-completed",
+      "from": "service",
+      "to": "data",
+      "y": 1275,
+      "label": "Save COMPLETED + driver available",
+      "note": "Solo completa un viaje IN_PROGRESS y libera al driver asignado."
+    },
+    {
+      "id": "completed-saved",
+      "from": "data",
+      "to": "service",
+      "y": 1330,
+      "label": "Cambios guardados",
+      "variant": "return"
+    },
+    {
+      "id": "completed-ride",
+      "from": "service",
+      "to": "api",
+      "y": 1360,
+      "label": "Ride COMPLETED",
+      "variant": "return"
+    },
+    {
+      "id": "completed-response",
+      "from": "api",
+      "to": "client",
+      "y": 1390,
+      "label": "200 OK",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Cómo leer la secuencia",
+      "items": [
+        "El ejemplo HTTP funciona tanto para C# como para TypeScript.",
+        "La consola llama a RideService directamente y omite la capa HTTP.",
+        "El estado vive en memoria y se reinicia al detener el proceso."
+      ]
+    }
+  ]
+}

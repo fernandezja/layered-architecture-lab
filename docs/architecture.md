@@ -1,5 +1,9 @@
 # Architecture
 
+**Interactive diagrams:** 
+ - [Layered architecture](architecture-urban-mobility/urban-mobility-architecture.html)
+ - [Ride lifecycle sequence](sequence-ride-lifecycle/ride-lifecycle-sequence.html)
+
 ## Logical layers and dependency direction
 
 ```mermaid

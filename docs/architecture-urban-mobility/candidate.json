@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura de Urban Mobility",
+    "locale": "es",
+    "output": ".archify/architecture-urban-mobility-20261118-103500/urban-mobility-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/fernandezja/layered-architecture-lab.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "0f61c64a5a85546c22e28c489024e3270df21313"
+    }
+  },
+  "components": [
+    {
+      "id": "caller",
+      "type": "external",
+      "label": "Usuario",
+      "sublabel": "Cliente HTTP o consola",
+      "pos": [35, 64],
+      "size": [125, 72],
+      "sources": [
+        {
+          "path": "requests/mobility-dotnet.http",
+          "line": 3,
+          "end_line": 30,
+          "label": "Flujo HTTP .NET"
+        },
+        {
+          "path": "requests/mobility-typescript.http",
+          "line": 3,
+          "end_line": 30,
+          "label": "Flujo HTTP TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "presentation",
+      "type": "frontend",
+      "label": "Presentation",
+      "sublabel": "Console UI + HTTP API (C# / TS)",
+      "pos": [260, 60],
+      "size": [180, 80],
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Api/Program.cs",
+          "line": 68,
+          "end_line": 110,
+          "label": "API .NET"
+        },
+        {
+          "path": "typescript/src/ui/api/MobilityRoutes.ts",
+          "line": 18,
+          "end_line": 58,
+          "label": "API TypeScript"
+        },
+        {
+          "path": "typescript/src/ui/console/ConsoleMenu.ts",
+          "line": 17,
+          "end_line": 50,
+          "label": "Consola TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "type": "backend",
+      "label": "Business",
+      "sublabel": "RideService · reglas del viaje",
+      "pos": [555, 60],
+      "size": [150, 80],
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Business/Services/RideService.cs",
+          "line": 8,
+          "end_line": 57,
+          "label": "RideService .NET"
+        },
+        {
+          "path": "typescript/src/business/services/RideService.ts",
+          "line": 10,
+          "end_line": 44,
+          "label": "RideService TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "contracts",
+      "type": "backend",
+      "label": "Repository interfaces",
+      "sublabel": "Contratos Ride y Driver",
+      "pos": [825, 60],
+      "size": [160, 80],
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Data/Abstractions/IRideRepository.cs",
+          "line": 1,
+          "end_line": 12,
+          "label": "Contrato .NET"
+        },
+        {
+          "path": "typescript/src/business/abstracts/IRideRepository.ts",
+          "line": 1,
+          "end_line": 7,
+          "label": "Contrato TypeScript"
+        },
+        {
+          "path": "typescript/src/business/abstracts/IDriverRepository.ts",
+          "line": 1,
+          "end_line": 7,
+          "label": "Contrato de Driver"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "type": "database",
+      "label": "Data",
+      "sublabel": "In-memory repositories",
+      "pos": [1110, 60],
+      "size": [130, 80],
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Data/InMemoryRideRepository.cs",
+          "line": 1,
+          "end_line": 22,
+          "label": "Repositorio .NET"
+        },
+        {
+          "path": "typescript/src/data/InMemoryRideRepository.ts",
+          "line": 1,
+          "end_line": 19,
+          "label": "Repositorio TypeScript"
+        },
+        {
+          "path": "typescript/src/composition/createDemoApplication.ts",
+          "line": 6,
+          "end_line": 10,
+          "label": "Composición TypeScript"
+        }
+      ]
+    },
+    {
+      "id": "entities",
+      "type": "backend",
+      "label": "Entities",
+      "sublabel": "Ride · Driver · estados · tipos",
+      "pos": [500, 300],
+      "size": [260, 82],
+      "sources": [
+        {
+          "path": "dotnet/src/Mobility.Entities/Ride.cs",
+          "line": 1,
+          "end_line": 9,
+          "label": "Entidades .NET"
+        },
+        {
+          "path": "typescript/src/entities/Ride.ts",
+          "line": 1,
+          "end_line": 11,
+          "label": "Entidad TypeScript"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "caller-to-presentation",
+      "from": "caller",
+      "to": "presentation",
+      "label": "CLI/HTTP"
+    },
+    {
+      "id": "presentation-to-business",
+      "from": "presentation",
+      "to": "business",
+      "label": "usa servicio"
+    },
+    {
+      "id": "business-to-contracts",
+      "from": "business",
+      "to": "contracts",
+      "label": "usa interfaces"
+    },
+    {
+      "id": "contracts-to-data",
+      "from": "contracts",
+      "to": "data",
+      "label": "implementación"
+    },
+    {
+      "id": "presentation-to-entities",
+      "from": "presentation",
+      "to": "entities",
+      "label": "tipos de entrada / salida",
+      "variant": "dashed"
+    },
+    {
+      "id": "business-to-entities",
+      "from": "business",
+      "to": "entities",
+      "label": "usa modelos",
+      "variant": "dashed"
+    },
+    {
+      "id": "data-to-entities",
+      "from": "data",
+      "to": "entities",
+      "label": "tipos usados",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Dirección de dependencias",
+      "items": [
+        "Presentation llama a Business; RideService opera mediante interfaces de repositorio.",
+        "Data implementa esas interfaces. No hay una dependencia directa de Data hacia Presentation."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Entities transversal",
+      "items": [
+        "Ride, Driver y sus tipos se comparten entre Presentation, Business y Data.",
+        "En C# las interfaces están en Mobility.Data.Abstractions; en TypeScript están en src/business/abstracts."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Persistencia de demostración",
+      "items": [
+        "Los repositorios son in-memory y cada proceso de API o consola mantiene su propio estado."
+      ]
+    }
+  ]
+}

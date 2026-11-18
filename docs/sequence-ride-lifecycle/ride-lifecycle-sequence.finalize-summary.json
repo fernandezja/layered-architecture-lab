@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\candidate.json",
+    "sha256": "557b87da08f63600b821133a9dbf5631ad626634ffd4f014b58a38e1492cefac",
+    "bytes": 10122
+  },
+  "artifact": {
+    "path": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\ride-lifecycle-sequence.html",
+    "sha256": "c3b0ed853ea0c06e7de226c6c576faba4800469a267a628a7e9b09e2ababda17",
+    "bytes": 862112
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\ride-lifecycle-sequence.finalize.json",
+    "summaryReceipt": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\ride-lifecycle-sequence.finalize-summary.json",
+    "browserCheckReceipt": "D:\\github\\layered-architecture-lab\\.archify\\sequence-ride-lifecycle-20261118-103500\\ride-lifecycle-sequence.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-18T13:38:49.377Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 12379,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
