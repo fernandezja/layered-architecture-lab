@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:5081
+
+### Read driver IDs first; use the seeded Motorcycle driver's ID below.
+# @name listDrivers
+GET {{baseUrl}}/api/drivers
+
+### Request a Motorcycle ride.
+# @name requestRide
+POST {{baseUrl}}/api/rides
+Content-Type: application/json
+
+{
+  "origin": "Campus UTN",
+  "destination": "Downtown",
+  "vehicleType": "Motorcycle"
+}
+
+### Accept using the second seeded driver (Motorcycle).
+POST {{baseUrl}}/api/rides/{{requestRide.response.body.id}}/accept
+Content-Type: application/json
+
+{
+  "driverId": "{{listDrivers.response.body.$[1].id}}"
+}
+
+### Start the accepted ride.
+POST {{baseUrl}}/api/rides/{{requestRide.response.body.id}}/start
+
+### Complete the ride and release its driver.
+POST {{baseUrl}}/api/rides/{{requestRide.response.body.id}}/complete
+
+### Inspect all rides.
+GET {{baseUrl}}/api/rides

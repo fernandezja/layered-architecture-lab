@@ -1,0 +1,37 @@
+name: TypeScript CI
+
+on:
+  push:
+    paths:
+      - "typescript/**"
+      - ".github/workflows/typescript-ci.yml"
+  pull_request:
+    paths:
+      - "typescript/**"
+      - ".github/workflows/typescript-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+      - name: Install dependencies
+        working-directory: typescript
+        run: npm ci
+      - name: Type check
+        working-directory: typescript
+        run: npm run typecheck
+      - name: Build
+        working-directory: typescript
+        run: npm run build
+      - name: Unit tests and coverage
+        working-directory: typescript
+        run: npm run test:coverage
