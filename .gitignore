@@ -205,3 +205,6 @@ vite.config.ts.timestamp-*
 typescript/dist/
 typescript/coverage/
 **/TestResults/
+
+
+*.user
