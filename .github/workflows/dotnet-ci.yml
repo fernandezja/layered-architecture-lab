@@ -1,0 +1,29 @@
+name: .NET CI
+
+on:
+  push:
+    paths:
+      - "dotnet/**"
+      - ".github/workflows/dotnet-ci.yml"
+  pull_request:
+    paths:
+      - "dotnet/**"
+      - ".github/workflows/dotnet-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore dotnet/Mobility.slnx
+      - name: Build
+        run: dotnet build dotnet/Mobility.slnx --no-restore --configuration Release
+      - name: Unit tests and coverage
+        run: dotnet test dotnet/Mobility.slnx --no-build --configuration Release --collect:"XPlat Code Coverage"

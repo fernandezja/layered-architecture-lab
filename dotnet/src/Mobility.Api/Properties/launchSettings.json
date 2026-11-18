@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Mobility.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57106;http://localhost:57107"
+    }
+  }
+}

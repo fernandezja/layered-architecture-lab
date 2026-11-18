@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="src/Mobility.Console/Mobility.Console.csproj" />
+  <Folder Name="/Core/">
+    <Project Path="src/Mobility.Business/Mobility.Business.csproj" />
+    <Project Path="src/Mobility.Data/Mobility.Data.csproj" />
+    <Project Path="src/Mobility.Entities/Mobility.Entities.csproj" Id="9c1bba83-39b8-494c-9d30-081f405f0372" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/Mobility.Business.Tests/Mobility.Business.Tests.csproj" />
+  </Folder>
+  <Project Path="src/Mobility.Api/Mobility.Api.csproj" />
+</Solution>
